@@ -59,24 +59,12 @@
 import random
 import copy
 r = list(range(1,91))
-#print (r)
 class Ticket():
-    #wrap = paper() 
-    #num = self.g_ticket()
-    #ticket = copy.copy(num)
-    #wrap = 'jgjglk'
-    #num = []
-    #ticket = []	
+
     def __init__(self):
         self.wrap = self._paper()
-        #num = self.g_ticket()
-        #ticket = copy.copy(num)
-        #wrap = 'jgjglk'
-        #self.num = sorted(random.sample(range (1,91),15))
         self.num = self._gen()
-        #self.num = [8, 10, 14, 18, 29, 33, 35, 41, 46, 53, 58, 67, 73, 74, 85]
         self.ticket = copy.deepcopy(self.num)
-        #print (self.wrap)
         return 
 
     def _paper(self):
@@ -87,13 +75,10 @@ class Ticket():
         for i in range(5):
             k.append(k1[i])
             k.append(k2[i])
-        #print(k0,k1,k2)
         k_c = sorted(k)
-        #print (k_c)
         s=''
         index = 0
         for i in range(1,28):
-            #n.append(i)
             if i in k_c:
                 s = s +('{0['+str(index)+']:3} ')
                 index +=1
@@ -104,7 +89,6 @@ class Ticket():
         num = sorted(random.sample(range (1,91),15))
         return (num)
     def prnt (self):
-        print ("-"*35) 
         print(self.wrap[:61].format(self.num))
         print(self.wrap[61:122].format(self.num))
         print(self.wrap[122:].format(self.num))
@@ -116,9 +100,6 @@ class Ticket():
             mi = self.num.index(barrel)
             self.ticket.remove(barrel)
             self.num[mi]='  -'
-        #else:
-            #print ('n')
-        #print ("NUM : {}   \nTICKET : {}".format(self.num, self.ticket))
         return 
 class Bag():
     def __init__(self):
@@ -128,30 +109,47 @@ class Bag():
         self.barrel = random.sample(self.barrels,1)[0]
         self.barrels.remove(self.barrel)
         return (self.barrel)
-
-#num = sorted(random.sample(range (1,91),15))
-num = [8, 10, 14, 18, 29, 33, 35, 41, 46, 53, 58, 67, 73, 74, 85]
-mt = Ticket()
-ct = Ticket()
-#mt.num = [8, 10, 14, 18, 29, 33, 35, 41, 46, 53, 58, 67, 73, 74, 85]
-#ct.num = [8, 10, 14, 18, 29, 37, 95, 42, 46, 53, 58, 67, 73, 74, 85]
-
-l = random.randint(1,91)
-#l = 33
-mt.prnt()
-ct.prnt()
-mas = Bag()
-#l = mas.getnew()
-#print (l)
-
-while mt.ticket != [] and ct.ticket != [] :
-    l = mas.getnew()
-    mt.stress(l)
-    ct.stress(l)
+yn = 'y'
+while yn == 'y':
+    mt = Ticket()
+    ct = Ticket()
+    mas = Bag()
+    print ('\n Начинаем новаю игру \n Сдаем карточки')
+    #print ('{:-^35}'.format('Ваша карточка'))
     #mt.prnt()
+    #print ('{:-^35}'.format('Карточка компьютера'))
     #ct.prnt()
-    print (mt.ticket)
-    print (ct.ticket)
-    if mt.ticket ==[] or ct.ticket == [] :
-    	print ('ok')
 
+    while mt.ticket != [] and ct.ticket != [] :
+        l = mas.getnew()
+        print('Новый бочонок: {} (осталось {})'.format(l,len(mas.barrels)))
+        print ('{:-^35}'.format('Ваша карточка'))
+        mt.prnt()
+        print ('{:-^35}'.format('Карточка компьютера'))
+        ct.prnt()
+        strike = ''
+        strike = input ('Зачеркнуть цифру? (y/n)')
+        while strike != 'y' and strike !='n':
+            print ('Символ должны быть y/n. Введите еще')
+            strike = input ('Зачеркнуть цифру? (y/n)')
+        if strike == 'y' and l in mt.ticket:
+            mt.stress(l)
+        elif strike == 'y' and (l not in mt.ticket) :
+            print ('А такого числа у вас не было. увы, Вы проиграли')
+            break
+        elif strike == 'n' and (l in mt.ticket) :
+            print ('Число было, а Вы не отметили. Вы проиграли')
+            break
+        elif strike !='y' and strike !='n':
+            print ('символы должны быть y/n')
+            break
+        else:
+            print ('Поехали дальше')
+        ct.stress(l)
+    if mt.ticket ==[] :
+        print ('Поздравляю! Вы выиграли!')
+    elif ct.ticket == [] :
+        print ('Увы! Вы проиграли')
+    else:
+        print ('GAME OVER')
+        yn = input ('Играем еще? y/n')
