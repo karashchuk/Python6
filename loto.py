@@ -57,43 +57,70 @@
 
 """
 import random
-mas = random.sample(range(1,91),15)
-card = sorted(mas)
-k = random.sample(range(1,11),5)
-k0 = sorted(k)
-k1 = sorted(random.sample(range(11,21),5))
-k2 = sorted(random.sample(range(21,31),5))
-for i in range(5):
-    k.append(k1[i])
-    k.append(k2[i])
-#print(k0,k1,k2)
-k_c = sorted(k)
-#print (k_c)
-s=''
-index = 0
-for i in range(1,31):
-    #n.append(i)
-    if i in k_c:
-        s = s +('{0['+str(index)+']:3} ')
-        index +=1
-    else:
-        s = s + ('    ')
-#print (s)
+import copy
+class Ticket():
+    #wrap = paper() 
+    #num = self.g_ticket()
+    #ticket = copy.copy(num)
+    #wrap = 'jgjglk'
+    #num = []
+    #ticket = []	
+    def __init__(self):
+        self.wrap = self.paper()
+        #num = self.g_ticket()
+        #ticket = copy.copy(num)
+        #wrap = 'jgjglk'
+        self.num = sorted(random.sample(range (1,91),15))
+        self.ticket = copy.copy(num)
+        #print (self.wrap)
+        return 
+
+    def paper(self):
+        k = random.sample(range(1,10),5)
+        k0 = sorted(k)
+        k1 = sorted(random.sample(range(10,19),5))
+        k2 = sorted(random.sample(range(19,28),5))
+        for i in range(5):
+            k.append(k1[i])
+            k.append(k2[i])
+        #print(k0,k1,k2)
+        k_c = sorted(k)
+        #print (k_c)
+        s=''
+        index = 0
+        for i in range(1,28):
+            #n.append(i)
+            if i in k_c:
+                s = s +('{0['+str(index)+']:3} ')
+                index +=1
+            else:
+                s = s + ('    ')
+        return (s)
+    def g_ticket(self):
+        num = sorted(random.sample(range (1,91),15))
+        return (num)
+    def prnt (self):
+        print ("-"*35) 
+        print(self.wrap[:61].format(self.num))
+        print(self.wrap[61:122].format(self.num))
+        print(self.wrap[122:].format(self.num))
+        print ("-"*35)
+        return
+    def stress(self,barrel):
+        if barrel in self.num:
+            print('y')
+            mi = self.num.index(barrel)
+            self.ticket.remove(barrel)
+            self.num[mi]='  -'
+        else:
+            print ('n')
+        print ("NUM : {}   \nTICKET : {}".format(self.num, self.ticket))
+        return 
+
 #num = sorted(random.sample(range (1,91),15))
 num = [8, 10, 14, 18, 29, 33, 35, 41, 46, 53, 58, 67, 73, 74, 85]
-import copy
-ticket = copy.copy(num)
-print ("-"*39) 
-print(s[:65].format(num))
-print(s[65:130].format(num))
-print(s[130:].format(num))
-print ("-"*39)
-l=33
-if l in num:
-    print('y')
-    mi = num.index(l)
-    ticket.remove(l)
-    num[mi]='  -'
-else:
-    print ('n')
-print ("NUM : {}   \nTICKET : {}".format(num,ticket))
+mt = Ticket()
+mt.prnt()
+ct = Ticket()
+ct.prnt()
+mt.prnt()
