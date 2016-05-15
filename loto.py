@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+__author__      = "Anatoly Karashchuk"
 """Лото
 
 Правила игры в лото.
