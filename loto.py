@@ -58,6 +58,8 @@
 """
 import random
 import copy
+r = list(range(1,91))
+#print (r)
 class Ticket():
     #wrap = paper() 
     #num = self.g_ticket()
@@ -66,16 +68,18 @@ class Ticket():
     #num = []
     #ticket = []	
     def __init__(self):
-        self.wrap = self.paper()
+        self.wrap = self._paper()
         #num = self.g_ticket()
         #ticket = copy.copy(num)
         #wrap = 'jgjglk'
-        self.num = sorted(random.sample(range (1,91),15))
-        self.ticket = copy.copy(num)
+        #self.num = sorted(random.sample(range (1,91),15))
+        self.num = self._gen()
+        #self.num = [8, 10, 14, 18, 29, 33, 35, 41, 46, 53, 58, 67, 73, 74, 85]
+        self.ticket = copy.deepcopy(self.num)
         #print (self.wrap)
         return 
 
-    def paper(self):
+    def _paper(self):
         k = random.sample(range(1,10),5)
         k0 = sorted(k)
         k1 = sorted(random.sample(range(10,19),5))
@@ -96,7 +100,7 @@ class Ticket():
             else:
                 s = s + ('    ')
         return (s)
-    def g_ticket(self):
+    def _gen(self):
         num = sorted(random.sample(range (1,91),15))
         return (num)
     def prnt (self):
@@ -108,19 +112,46 @@ class Ticket():
         return
     def stress(self,barrel):
         if barrel in self.num:
-            print('y')
+            #print('y')
             mi = self.num.index(barrel)
             self.ticket.remove(barrel)
             self.num[mi]='  -'
-        else:
-            print ('n')
-        print ("NUM : {}   \nTICKET : {}".format(self.num, self.ticket))
+        #else:
+            #print ('n')
+        #print ("NUM : {}   \nTICKET : {}".format(self.num, self.ticket))
         return 
+class Bag():
+    def __init__(self):
+    	self.barrels = r
+    	return
+    def getnew(self):
+        self.barrel = random.sample(self.barrels,1)[0]
+        self.barrels.remove(self.barrel)
+        return (self.barrel)
 
 #num = sorted(random.sample(range (1,91),15))
 num = [8, 10, 14, 18, 29, 33, 35, 41, 46, 53, 58, 67, 73, 74, 85]
 mt = Ticket()
-mt.prnt()
 ct = Ticket()
-ct.prnt()
+#mt.num = [8, 10, 14, 18, 29, 33, 35, 41, 46, 53, 58, 67, 73, 74, 85]
+#ct.num = [8, 10, 14, 18, 29, 37, 95, 42, 46, 53, 58, 67, 73, 74, 85]
+
+l = random.randint(1,91)
+#l = 33
 mt.prnt()
+ct.prnt()
+mas = Bag()
+#l = mas.getnew()
+#print (l)
+
+while mt.ticket != [] and ct.ticket != [] :
+    l = mas.getnew()
+    mt.stress(l)
+    ct.stress(l)
+    #mt.prnt()
+    #ct.prnt()
+    print (mt.ticket)
+    print (ct.ticket)
+    if mt.ticket ==[] or ct.ticket == [] :
+    	print ('ok')
+
